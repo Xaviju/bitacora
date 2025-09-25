@@ -123,7 +123,7 @@ async function main() {
       return;
     }
 
-    console.log('Current bitacora: \n');
+    console.log('\nHere is your entry for today\'s bitacora: \n');
     const iopStories = userStories.filter((story) =>
       story.subject.startsWith(config.taiga.iop.prefix),
     );
