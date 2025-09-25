@@ -1,0 +1,20 @@
+{
+  "auth": {
+    "username": "username",
+    "password": "password"
+  },
+  "taiga": {
+    "apiUrl": "https://api.taiga.io",
+    "project": {
+      "slug": "penpot",
+      "milestoneId": "476785"
+    },
+    "iop": {
+      "prefix": "[DESIGN TOKENS]",
+      "hashtag": "#design-tokens",
+      "channel": "iops-tokens--variants--protoflow",
+      "members": ["Andrés", "Natacha", "Xavi", "Andy", "Eva"],
+      "dailies": "MON, WED, FRI"
+    }
+  }
+}
