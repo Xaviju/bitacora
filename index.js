@@ -1,8 +1,15 @@
 import axios from 'axios';
 import config from './config.json' with { type: 'json' };
 
+/**
+ * @type {string | null}
+ */
 let authToken = null;
 
+/**
+ * Authenticates with the Taiga API and retrieves an auth token
+ * @returns {string | null} - The auth token or null if authentication failed.
+ */
 const authenticate = async () => {
   try {
     const response = await axios.post(`${config.taiga.apiUrl}/api/v1/auth`, {
@@ -20,59 +27,11 @@ const authenticate = async () => {
   }
 };
 
-const getProjectID = async (projectSlug) => {
-  if (!authToken) {
-    await authenticate();
-  }
-
-  try {
-    const response = await axios.get(
-      `${config.taiga.apiUrl}/api/v1/projects/by_slug`,
-      {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-        params: {
-          slug: projectSlug,
-        },
-      },
-    );
-
-    if (response.data && response.data.id) {
-      return response.data.id;
-    } else {
-      throw new Error('Project not found');
-    }
-  } catch (error) {
-    throw new Error(`Failed to get project ID: ${error.message}`);
-  }
-};
-
-const getCurrentSprints = async (projectId) => {
-  if (!authToken) {
-    await authenticate();
-  }
-
-  try {
-    const response = await axios.get(
-      `${config.taiga.apiUrl}/api/v1/milestones`,
-      {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-        params: {
-          project: projectId,
-          closed: false,
-        },
-      },
-    );
-
-    return response.data;
-  } catch (error) {
-    throw new Error(`Failed to get sprints: ${error.message}`);
-  }
-};
-
+/**
+ * Gets the user stories in a given sprint
+ * @param {number} milestoneId - The ID of the milestone (sprint).
+ * @returns {Array} - An array of user stories.
+ */
 const getUserStoriesInSprint = async (milestoneId) => {
   if (!authToken) {
     await authenticate();
@@ -102,18 +61,12 @@ async function main() {
     console.log('Authenticating with Taiga...');
     await authenticate();
 
-    console.log('Getting project ID');
-    const projectId = await getProjectID(config.taiga.project.slug);
 
-    console.log('Getting current sprints...');
-    const sprints = await getCurrentSprints(projectId);
+    console.log(`Fetching user stories for milestone ID: ${config.taiga.project.milestoneId}...`);
+    console.log('This may take a moment. Please wait...');
+    console.log('Filtering stories with prefix:', config.taiga.iop.prefix);
 
-    if (sprints.length === 0) {
-      console.log('No active sprints found.');
-      return;
-    }
-
-    console.log('Getting current stories...');
+    /** @type {Array} */
     const userStories = await getUserStoriesInSprint(
       config.taiga.project.milestoneId,
     );
@@ -124,6 +77,7 @@ async function main() {
     }
 
     console.log('\nHere is your entry for today\'s bitacora: \n');
+    /** @type {Array} */
     const iopStories = userStories.filter((story) =>
       story.subject.startsWith(config.taiga.iop.prefix),
     );
