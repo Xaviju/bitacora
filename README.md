@@ -18,6 +18,14 @@ cp config.example.json config.json
 npm install
 ```
 
+## Requirements
+
+To be able to config bitacora ensure your IOP has:
+
+- A prefix written at the beggining of your user stories. E.g.`[DESIGN TOKENS]`
+- Uses a hashtag in the chat. E.g. #design-tokens
+- Has a IOP channel in the Kaleidos chat
+
 ## Configuration
 
 The script uses a configuration file `config.json` to specify various parameters. Below is a detailed explanation of each configuration option:
