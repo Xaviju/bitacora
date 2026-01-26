@@ -79,7 +79,8 @@ async function main() {
     console.log('\nHere is your entry for today\'s bitacora: \n');
     /** @type {Array} */
     const iopStories = userStories.filter((story) =>
-      story.subject.startsWith(config.taiga.iop.prefix),
+      story.subject.startsWith(config.taiga.iop.prefix) &&
+      (story.status_extra_info.name === config.taiga.status),
     );
     console.log(
       `[${config.taiga.iop.hashtag}](https://chat.kaleidos.net/kaleidos/channels/${config.taiga.iop.channel})`,
