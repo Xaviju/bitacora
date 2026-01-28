@@ -78,9 +78,13 @@ async function main() {
 
     console.log('\nHere is your entry for today\'s bitacora: \n');
     /** @type {Array} */
-    const iopStories = userStories.filter((story) =>
+    const activeStories = userStories.filter((story) =>
       story.subject.startsWith(config.taiga.iop.prefix) &&
-      (story.status_extra_info.name === config.taiga.status),
+      (story.status_extra_info.name === config.taiga.activeStatus),
+    );
+    const finishedStories = userStories.filter((story) =>
+      story.subject.startsWith(config.taiga.iop.prefix) &&
+      (story.status_extra_info.name === config.taiga.finishedStatus),
     );
     console.log(
       `[${config.taiga.iop.hashtag}](https://chat.kaleidos.net/kaleidos/channels/${config.taiga.iop.channel})`,
@@ -90,11 +94,19 @@ async function main() {
     );
     console.log(` **attendees**: ${config.taiga.iop.members.join(', ')}`);
     console.log('\n**In progress**');
-    iopStories.forEach((story, index) => {
+    activeStories.forEach((story, index) => {
       console.log(
         `${index + 1}. ${story.subject.replace(config.taiga.iop.prefix, '').trim()} - [story #${story.ref}](https://tree.taiga.io/project/penpot/us/${story.ref})`,
       );
     });
+    if (finishedStories.length > 0) {
+      console.log('\n**Finished**');
+      finishedStories.forEach((story, index) => {
+        console.log(
+          `${index + 1}. ${story.subject.replace(config.taiga.iop.prefix, '').trim()} - [story #${story.ref}](https://tree.taiga.io/project/penpot/us/${story.ref})`,
+        );
+      });
+    }
     console.log('\n**Blocking Alerts**: No ');
     console.log('**Dependency Alerts**: No ');
     console.log('\nHave a nice day! 🚀');

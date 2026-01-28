@@ -9,7 +9,8 @@
       "slug": "penpot",
       "milestoneId": "476785"
     },
-    "status": "Developing",
+    "activeStatus": "Developing",
+    "finishedStatus": "Done",
     "iop": {
       "prefix": "[DESIGN TOKENS]",
       "hashtag": "#design-tokens",
