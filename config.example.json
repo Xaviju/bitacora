@@ -10,7 +10,7 @@
       "milestoneId": "476785"
     },
     "activeStatus": "Developing",
-    "finishedStatus": "Done",
+    "finishedStatus": ["Done", "Ready for test", "Ready for QA"],
     "iop": {
       "prefix": "[DESIGN TOKENS]",
       "hashtag": "#design-tokens",

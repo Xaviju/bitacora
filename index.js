@@ -77,14 +77,21 @@ async function main() {
     }
 
     console.log('\nHere is your entry for today\'s bitacora: \n');
+    const activeStatus = Array.isArray(config.taiga.activeStatus) ? 
+      config.taiga.activeStatus :
+      [config.taiga.activeStatus];
+    const finishedStatus = Array.isArray(config.taiga.finishedStatus) ? 
+      config.taiga.finishedStatus :
+      [config.taiga.finishedStatus];
+
     /** @type {Array} */
     const activeStories = userStories.filter((story) =>
       story.subject.startsWith(config.taiga.iop.prefix) &&
-      (story.status_extra_info.name === config.taiga.activeStatus),
+      (activeStatus.includes(story.status_extra_info.name)),
     );
     const finishedStories = userStories.filter((story) =>
       story.subject.startsWith(config.taiga.iop.prefix) &&
-      (story.status_extra_info.name === config.taiga.finishedStatus),
+      (finishedStatus.includes(story.status_extra_info.name)),
     );
     console.log(
       `[${config.taiga.iop.hashtag}](https://chat.kaleidos.net/kaleidos/channels/${config.taiga.iop.channel})`,
