@@ -28,7 +28,9 @@ To be able to config bitacora ensure your IOP has:
 
 ## Configuration
 
-The script uses a configuration file `config.json` to specify various parameters. Below is a detailed explanation of each configuration option:
+The script uses a configuration file `config.json` to specify various parameters. Below is a detailed explanation of each configuration option.
+
+To get the milestone ID, one way is open the sprint in Taiga, go to devtools / network, reload the page and filter for a call with "milestone".
 
 ```json
 {
